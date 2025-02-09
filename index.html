@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,25 +13,25 @@
 <body>
     <div id="controls">
         <input id="search" type="text" placeholder="Search a place">
-        <button id="searchButton">Search</button>
-        <button id="trafficButton">Traffic</button>
-        <button id="myLocationButton">My Location</button>
+        <button onclick="searchLocation()">Search</button>
+        <button onclick="toggleTraffic()">Traffic</button>
+        <button onclick="showCurrentLocation()">My Location</button>
         <input id="start" type="text" placeholder="Start Location">
         <input id="end" type="text" placeholder="End Location">
-        <button id="driveButton">Drive</button>
-        <button id="trainButton">Train Route</button>
+        <button onclick="routeBetweenTwoLocations('DRIVING')">Drive</button>
+        <button onclick="routeBetweenTwoLocations('TRANSIT')">Train Route</button>
     </div>
 
     <div id="mapTypeDropdown">
-        <button id="mapTypeButton">Map</button>
+        <button id="mapTypeButton" onclick="toggleMapTypeDropdown()">Map</button>
         <div id="mapTypeOptions">
-            <a href="#" data-map-type="satellite">Satellite</a>
-            <a href="#" data-map-type="terrain">Terrain</a>
+            <a href="#" onclick="setMapType('satellite')">Satellite</a>
+            <a href="#" onclick="setMapType('terrain')">Terrain</a>
         </div>
     </div>
 
     <div id="leftNav">
-        <div class="logo" id="resetMap">
+        <div class="logo" onclick="resetMap()">
             <i class="material-icons">menu</i>
             <span>
                 <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
@@ -44,11 +43,11 @@
             <li><i class="material-icons">history</i> Recents</li>
         </ul>
         <div class="authButtons">
-            <button class="createAccountButton" id="createAccountButton">
+            <button class="createAccountButton" onclick="createAccount()">
                 <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Create Account">
                 Create Account
             </button>
-            <button id="signInButton" class="signInButton">
+            <button onclick="signIn()" class="signInButton">
                 <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Sign In" >
                 Sign In
             </button>

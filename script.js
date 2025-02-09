@@ -2,15 +2,15 @@ let map, streetView, trafficLayer, directionsService, directionsRenderer;
 let currentLocationMarker, searchMarker;
 let startAutocomplete, endAutocomplete, searchAutocomplete;
 let userLocationSet = false;
-let accountCreated = localStorage.getItem('accountCreated') === 'true'; // Load account status
+let accountCreated = localStorage.getItem('accountCreated') === 'true';
 
-// Initialize the map after the API is loaded.
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 17.4993709, lng: 78.2988525 },
         zoom: 12,
         mapTypeId: "roadmap",
-        disableDefaultUI: true
+        disableDefaultUI: false,
+	streetViewControl: true,
     });
 
     streetView = map.getStreetView();
@@ -19,7 +19,6 @@ function initMap() {
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
 
-    // Get Current Location
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition((position) => {
             const userLocation = {
@@ -38,63 +37,31 @@ function initMap() {
         });
     }
 
-    // Autocomplete for inputs
     startAutocomplete = new google.maps.places.Autocomplete(document.getElementById("start"));
     endAutocomplete = new google.maps.places.Autocomplete(document.getElementById("end"));
     searchAutocomplete = new google.maps.places.Autocomplete(document.getElementById("search"));
     searchAutocomplete.addListener("place_changed", searchLocation);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Button Event Listeners
-    document.getElementById('mapTypeButton').addEventListener('click', toggleMapTypeDropdown);
-    document.getElementById('searchButton').addEventListener('click', searchLocation);
-    document.getElementById('trafficButton').addEventListener('click', toggleTraffic);
-    document.getElementById('myLocationButton').addEventListener('click', showCurrentLocation);
-    document.getElementById('driveButton').addEventListener('click', () => routeBetweenTwoLocations('DRIVING'));
-    document.getElementById('trainButton').addEventListener('click', () => routeBetweenTwoLocations('TRANSIT'));
-    document.getElementById('resetMap').addEventListener('click', resetMap);
-    document.getElementById('signInButton').addEventListener('click', signIn);
-    document.getElementById('createAccountButton').addEventListener('click', createAccount);
-
-    // Map type selection
-    document.querySelectorAll('#mapTypeOptions a').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the link from navigating
-            const mapType = this.dataset.mapType;
-            setMapType(mapType);
-        });
-    });
-
-    // Load account status
-    accountCreated = localStorage.getItem('accountCreated') === 'true';
-});
-
 function toggleMapTypeDropdown() {
     document.getElementById("mapTypeDropdown").classList.toggle("show");
 }
 
-// Set the map type
 function setMapType(mapType) {
-    let styles = []; // Default to empty array
-
-    switch (mapType) {
-        case 'satellite':
-            map.setMapTypeId('satellite');
-            break;
-        case 'terrain':
-            map.setMapTypeId('terrain');
-            break;
-        default:
-            map.setMapTypeId('roadmap');
-            break;
+    if (mapType === 'satellite') {
+        map.setMapTypeId('satellite');
+        map.setOptions({styles: []});
+    } else if (mapType === 'terrain') {
+        map.setMapTypeId('terrain');
+        map.setOptions({styles: []});
+    } else {
+        map.setMapTypeId('roadmap');
+        map.setOptions({styles: []});
     }
 
-    map.setOptions({ styles: styles });
     toggleMapTypeDropdown();
 }
 
-// Handle Sign-In
 function signIn() {
     if (!accountCreated) {
         createAccount();
@@ -107,14 +74,12 @@ function signIn() {
 
         if (storedUsername === username && storedPassword === password) {
             alert("Sign in successful!");
-            // You can proceed with any actions after successful sign-in.
         } else {
             alert("Invalid credentials.");
         }
     }
 }
 
-// Handle Create Account
 function createAccount() {
     let username = prompt("Enter a username:");
     let password = prompt("Enter a password:");
@@ -130,7 +95,6 @@ function createAccount() {
     }
 }
 
-// Search for a location and display it on the map
 function searchLocation() {
     const searchInput = document.getElementById("search").value;
     if (!searchInput) {
@@ -157,7 +121,6 @@ function searchLocation() {
     });
 }
 
-// Route between two locations (Driving or Train)
 function routeBetweenTwoLocations(travelMode) {
     const startInput = document.getElementById("start").value;
     const endInput = document.getElementById("end").value;
@@ -183,7 +146,6 @@ function routeBetweenTwoLocations(travelMode) {
     );
 }
 
-// Show Current Location on Map
 function showCurrentLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -207,14 +169,11 @@ function showCurrentLocation() {
     }
 }
 
-// Toggle Traffic Layer
 function toggleTraffic() {
     trafficLayer.setMap(trafficLayer.getMap() ? null : map);
 }
 
-// Reset the map View to default when Logo is clicked
 function resetMap() {
-    // Reset to default center and zoom level
     map.setCenter({ lat: 17.4993709, lng: 78.2988525 });
     map.setZoom(12);
 }

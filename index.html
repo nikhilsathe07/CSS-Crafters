@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Clone</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="controls">
+        <input id="search" type="text" placeholder="Search a place">
+        <button id="searchButton">Search</button>
+        <button id="trafficButton">Traffic</button>
+        <button id="myLocationButton">My Location</button>
+        <input id="start" type="text" placeholder="Start Location">
+        <input id="end" type="text" placeholder="End Location">
+        <button id="driveButton">Drive</button>
+        <button id="trainButton">Train Route</button>
+    </div>
+
+    <div id="mapTypeDropdown">
+        <button id="mapTypeButton">Map</button>
+        <div id="mapTypeOptions">
+            <a href="#" data-map-type="satellite">Satellite</a>
+            <a href="#" data-map-type="terrain">Terrain</a>
+        </div>
+    </div>
+
+    <div id="leftNav">
+        <div class="logo" id="resetMap">
+            <i class="material-icons">menu</i>
+            <span>
+                <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span>
+                <span class="gray">Maps</span>
+            </span>
+        </div>
+        <ul>
+            <li><i class="material-icons">bookmark_border</i> Saved</li>
+            <li><i class="material-icons">history</i> Recents</li>
+        </ul>
+        <div class="authButtons">
+            <button class="createAccountButton" id="createAccountButton">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Create Account">
+                Create Account
+            </button>
+            <button id="signInButton" class="signInButton">
+                <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Sign In" >
+                Sign In
+            </button>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="script.js"></script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxY8490RGQgDp4XgNIlcndXytcFpEz2cc&libraries=places&callback=initMap">
+    </script>
+</body>
+</html>
